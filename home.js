@@ -1,6 +1,6 @@
 import { addToCart, getCartTotal, updateCart } from "./data/cart.js";
 import { getProducts, productsList } from "./data/products.js";
-import { renderProducts} from "./render/renderProducts.js";
+import { renderProducts, updateProduct, updateProductQuantity} from "./render/renderProducts.js";
 
 updateCartCount()
 getProducts()
@@ -16,11 +16,13 @@ document.addEventListener('click', (e) => {
     if(addToCartButton){
         const cardToAdd = addToCartButton.closest('.product-card')
         addToCart(cardToAdd.dataset.id)
+        updateProduct(cardToAdd.dataset.id, 1)
         updateCartCount()
     }
     else if(updateQuantity){
         const cardToUpdate= updateQuantity.closest('.product-card')
-        updateCart(cardToUpdate.dataset.id, updateQuantity.classList.contains('inc'))
+        let newQuantity = updateCart(cardToUpdate.dataset.id, updateQuantity.classList.contains('inc'))
+        updateProductQuantity(cardToUpdate.dataset.id, newQuantity)
         updateCartCount()
     }
 })

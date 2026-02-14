@@ -1,4 +1,3 @@
-import { updateProduct, updateProductQuantity } from "../render/renderProducts.js"
 import { getMatchingProduct } from "./products.js"
 
 export let cart = JSON.parse(localStorage.getItem('cart')) || []
@@ -12,7 +11,6 @@ export function addToCart(idToAdd){
         price, 
         quantity: 1
     })
-    updateProduct(idToAdd, 1)
     saveToStorage()
 }
 
@@ -26,10 +24,10 @@ export function updateCart(idToUpdate, toIncrease){
             newQuantity = item.quantity
         }
     })
-
-    updateProductQuantity(idToUpdate, newQuantity)
     if(newQuantity == 0)    removeFromCart(idToUpdate)
     saveToStorage()
+
+    return newQuantity
 }
 
 function removeFromCart(id){
