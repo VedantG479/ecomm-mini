@@ -1,0 +1,148 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: #ffffff;
+  color: #111111;
+}
+
+.header {
+  height: 50px;
+  padding: 0 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.back-link {
+  text-decoration: none;
+  font-size: 14px;
+  color: #555;
+}
+
+.logo {
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 60px auto;
+  padding: 0 20px;
+  display: flex;
+  gap: 60px;
+}
+
+.cart-items {
+  flex: 2;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.item-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.item-name {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.item-price {
+  font-size: 13px;
+  color: #666;
+}
+
+.qty-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.qty-btn {
+  width: 28px;
+  height: 28px;
+  border: 1px solid #ddd;
+  background: white;
+  cursor: pointer;
+}
+
+.cart-summary {
+  flex: 1;
+  border: 1px solid #e5e5e5;
+  padding: 25px;
+  border-radius: 12px;
+  height: fit-content;
+}
+
+.coupon-section {
+  margin-bottom: 30px;
+}
+
+.coupon-input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+.apply-btn {
+  width: 100%;
+  padding: 8px;
+  background: #111;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.apply-btn:hover {
+  background: #333;
+}
+
+.totals p {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.total-line {
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.checkout-btn {
+  width: 100%;
+  padding: 12px;
+  background: #111;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.checkout-btn:hover {
+  background: #333;
+}
+
+.checkout-status {
+  margin-top: 15px;
+  font-size: 13px;
+  color: #555;
+}

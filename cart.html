@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Cart</title>
+  <link rel="stylesheet" href="styles/cart.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <header class="header">
+    <a href="home.html" class="back-link">← Back to Store</a>
+    <div class="logo">YOUR CART</div>
+  </header>
+
+  <main class="container">
+
+    <div class="cart-items">
+        <div class="cart-item">
+            <div class="item-info">
+            <div class="item-name">iPhone 9</div>
+            <div class="item-price">$549</div>
+            </div>
+
+            <div class="qty-controls">
+            <button class="qty-btn">−</button>
+            <span>1</span>
+            <button class="qty-btn">+</button>
+            </div>
+        </div>
+
+        <div class="cart-item">
+            <div class="item-info">
+            <div class="item-name">Gaming Laptop</div>
+            <div class="item-price">$1299</div>
+            </div>
+
+            <div class="qty-controls">
+            <button class="qty-btn">−</button>
+            <span>2</span>
+            <button class="qty-btn">+</button>
+            </div>
+        </div>
+    </div>  
+
+
+    <div class="cart-summary">
+
+      <div class="coupon-section">
+        <input type="text" placeholder="Enter coupon code" class="coupon-input">
+        <button class="apply-btn">Apply</button>
+        <p class="coupon-message"></p>
+      </div>
+
+      <div class="totals">
+        <p>Subtotal <span class="subtotal">$0</span></p>
+        <p>Discount <span class="discount">$0</span></p>
+        <p class="total-line">Total <span class="total">$0</span></p>
+      </div>
+
+      <button class="checkout-btn">Checkout</button>
+      <p class="checkout-status"></p>
+
+    </div>
+
+  </main>
+</body>
+</html>
