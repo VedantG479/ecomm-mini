@@ -105,10 +105,6 @@ body {
   color: #666;
 }
 
-.hidden {
-  display: none;
-}
-
 .qty-controls {
   display: flex;
   align-items: center;
@@ -135,3 +131,6 @@ body {
   font-size: 14px;
 }
 
+.hidden {
+  display: none;
+}
