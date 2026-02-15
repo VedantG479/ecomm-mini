@@ -1,12 +1,18 @@
-import { cart, updateCart } from "./data/cart.js";
+import { cart, clearCart, updateCart } from "./data/cart.js";
 import { renderCart } from "./render/renderCart.js";
-import { renderPayment } from "./render/renderPayment.js";
+import { renderPayment, total } from "./render/renderPayment.js";
 
 const couponMsg = document.querySelector('.coupon-message')
-let timerId 
+const couponInput = document.querySelector('.coupon-input')
+const checkoutMsg = document.querySelector('.checkout-status')
+const applyBtn = document.querySelector('.apply-btn')
+const checkoutBtn = document.querySelector('.checkout-btn')
+
+let discount = 0
 
 renderCart()
-renderPayment()
+renderPayment(discount)
+
 document.addEventListener('click', (e) => {
     const updateQuantity = e.target.closest('.qty-btn')
 
@@ -14,54 +20,92 @@ document.addEventListener('click', (e) => {
         const cardToUpdate= updateQuantity.closest('.cart-item')
         updateCart(cardToUpdate.dataset.id, updateQuantity.classList.contains('inc'))
         renderCart()
-        renderPayment()
+        renderPayment(discount)
     }
-})
+    else if(e.target == checkoutBtn)    checkout()
+    else if(e.target == applyBtn){
+        applyBtn.classList.add('hidden')
+        checkoutBtn.classList.add('hidden')
+        const coupon = couponInput.value.trim()
 
-document.querySelector('.checkout-btn').addEventListener('click', () => {
-    //checkout
-})
-
-document.querySelector('.apply-btn').addEventListener('click', () => {
-    const coupon = document.querySelector('.coupon-input').value.trim()
-
-    if(!coupon){
-        renderPayment()
-        putCouponMessage('Enter valid coupon!')
-    }
-    else if(cart.length == 0){
-        renderPayment()
-        putCouponMessage('Nothing in cart!')
-    }
-    else{
-    document.querySelector('.apply-btn').classList.add('hidden')
-    couponMsg.innerText = ''
-        checkCoupon(coupon)
-          .then((discount) => {
+        if(!coupon){
+            discount = 0
             renderPayment(discount)
-            putCouponMessage(`-${discount}% OFF`)
-          })
-          .catch((msg) => {
-            renderPayment()
-            putCouponMessage(msg)
-          })
+            putCouponMessage('Enter valid coupon!')
+        }
+        else if(cart.length == 0){
+            discount = 0
+            renderPayment(discount)
+            putCouponMessage('Nothing in cart!')
+        }
+        else{
+            checkCoupon(coupon)
+            .then((disc) => {
+                discount = disc
+                renderPayment(discount)
+                putCouponMessage(`-${discount}% OFF Applied`)
+            })
+            .catch((msg) => {
+                discount = 0
+                renderPayment(discount)
+                putCouponMessage(msg)
+            })
+        }
     }
 })
+
+function checkout(){
+    applyBtn.classList.add('hidden')
+    checkoutBtn.classList.add('hidden')
+
+    if(cart.length == 0)    putCheckoutMessage('Empty cart')
+    else{
+        return new Promise(function(resolve, reject){
+            setTimeout(() => {
+                resolve(total)
+            }, 1000)
+        }).then((amount) => {
+            return putCheckoutMessage(`Order Placed of ${amount}`)
+        }).then(() => {
+            discount = 0
+            clearCart()
+            renderCart()
+            renderPayment(discount)
+            couponInput.value = ''
+        })
+    }
+}
 
 function checkCoupon(coupon){
     return new Promise(function(resolve, reject){
-        if(coupon == 'APPLY10') setTimeout(() => resolve(10), 5000)
-        else if(coupon == 'APPLY20') setTimeout(() => resolve(20), 5000)
-        else    setTimeout(() => reject('Invalid Coupon'), 5000)
+        if(coupon == 'APPLY10') setTimeout(() => resolve(10), 1000)
+        else if(coupon == 'APPLY20') setTimeout(() => resolve(20), 1000)
+        else    setTimeout(() => reject('Invalid Coupon'), 1000)
     })
 }
 
 function putCouponMessage(msg){
-    document.querySelector('.apply-btn').classList.remove('hidden')
-    
     couponMsg.innerText = msg
-    if(timerId) clearTimeout(timerId)
-    timerId = setTimeout(() => {
-        couponMsg.innerText = ''
-    }, 5000)
+    return new Promise(function(resolve, reject){
+        setTimeout(() => {
+            couponMsg.innerText = ''
+            resolve()
+        }, 3000)
+    }).then(() => {
+        applyBtn.classList.remove('hidden')
+        checkoutBtn.classList.remove('hidden')
+    })
+}
+
+function putCheckoutMessage(msg){
+    checkoutMsg.innerText = msg
+    return new Promise(function(resolve, reject){
+        setTimeout(() => {
+            checkoutMsg.innerText = ''
+            resolve()
+        }, 3000)
+    }).then(() => {
+        applyBtn.classList.remove('hidden')
+        checkoutBtn.classList.remove('hidden')
+    })
 }

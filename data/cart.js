@@ -46,6 +46,11 @@ export function getCartTotal(){
     return total
 }
 
+export function clearCart(){
+    cart = []
+    saveToStorage()
+}
+
 function saveToStorage(){
     localStorage.setItem('cart', JSON.stringify(cart))
 }
