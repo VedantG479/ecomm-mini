@@ -1,11 +1,12 @@
 import { cart } from "../data/cart.js"
 
 const productsGrid = document.querySelector('.products-grid')
+let renderedCount = 0
 
-export function renderProducts(productsList){
+export function renderProducts(productsList, newAdded){
     let productsGridHTML = ''
-    productsList.forEach((product) => {
-        const {id, thumbnail, title, price} = product
+    for(let i = renderedCount; i < productsList.length; i++){
+        const {id, thumbnail, title, price} = productsList[i]
 
         productsGridHTML += `<div class="product-card product-${id}" data-id=${id}>
                                 <img src="${thumbnail}" class="product-image" />
@@ -21,12 +22,15 @@ export function renderProducts(productsList){
                                     <button class="qty-btn inc">+</button>
                                 </div>
                             </div>`
-    })
-    productsGrid.innerHTML = productsGridHTML
+    }
+    productsGrid.innerHTML += productsGridHTML
 
-    cart.forEach((item) => {
-        updateProduct(item.id, item.quantity)
-    })
+    if(newAdded){
+        cart.forEach((item) => {
+            updateProduct(item.id, item.quantity)
+        })
+    }
+    renderedCount = productsList.length
 }
 
 export function updateProduct(productId, quantity){

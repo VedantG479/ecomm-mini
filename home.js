@@ -1,13 +1,20 @@
 import { addToCart, getCartTotal, updateCart } from "./data/cart.js";
-import { getProducts, productsList } from "./data/products.js";
+import { getProducts } from "./data/products.js";
 import { renderProducts, updateProduct, updateProductQuantity} from "./render/renderProducts.js";
 
+let isLoading = false
 updateCartCount()
-getProducts()
-  .then(() => {
-    renderProducts(productsList)
-  })
-  .catch((err) => showError(err))
+renderPage()
+
+function renderPage(newAdded = false){
+    isLoading = true
+    getProducts()
+      .then((productsList) => {
+        renderProducts(productsList, newAdded)
+      })
+      .catch((err) => showError(err))
+      .finally(() => isLoading = false)
+}
 
 document.addEventListener('click', (e) => {
     const addToCartButton = e.target.closest('.add-btn')
@@ -26,6 +33,12 @@ document.addEventListener('click', (e) => {
         updateCartCount()
     }
 })
+
+window.addEventListener('scroll', () => {
+    if(isLoading)   return
+    const nearBottom =  window.innerHeight + window.scrollY >= document.body.offsetHeight - 200;
+    if(nearBottom)    renderPage(true)
+});
 
 function updateCartCount(){
     const cartCount = document.querySelector('.cart-count').innerText = getCartTotal()
